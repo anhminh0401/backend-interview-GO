@@ -3,11 +3,10 @@ import "reflect-metadata";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import { AppDataSource } from "./database/connect-database";
-
-// init queue + create bull booard
+import productRoutes from "./modules/products/product.route";
+import { handleError } from "./helper/error";
 
 (async () => {
-
   // express
   const app = express();
   const port = 3000;
@@ -20,7 +19,17 @@ import { AppDataSource } from "./database/connect-database";
   // connect database mysql by typeORM
   await AppDataSource.initialize();
   // route
-  
+  app.use("/api/v1/products", productRoutes);
+
+  // middleware handling error
+  app.use(function (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    handleError(err, res);
+  });
 
   app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
