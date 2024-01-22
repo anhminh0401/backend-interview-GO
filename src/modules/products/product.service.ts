@@ -11,6 +11,7 @@ export class ProductService {
 
   public getDetailProduct = async (id: number) => {
     const product = await Product.findOne({ where: { id } });
+    if (!product) throw Errors.findNotFound;
     return product;
   };
 
@@ -23,7 +24,7 @@ export class ProductService {
 
   public updateProduct = async (id: number, infoProductDto: InfoProductDto) => {
     const product = await Product.findOne({ where: { id } });
-    if (product) throw Errors.findNotFound;
+    if (!product) throw Errors.findNotFound;
     for (const prop in product) {
       if (!infoProductDto[prop]) {
         infoProductDto[prop] = product[prop];
@@ -36,6 +37,8 @@ export class ProductService {
   };
 
   public deleteProdcut = async (id: number) => {
+    const product = await Product.findOne({ where: { id } });
+    if (!product) throw Errors.findNotFound;
     await AppDataSource.transaction(async (transaction) => {
       await transaction.delete(Product, { id: id });
     });
