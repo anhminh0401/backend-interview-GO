@@ -1,3 +1,7 @@
+# Backend-GO
+
+Cung cấp api cho product, sử dụng express typescipt, mysql (hosting trên https://www.freemysqlhosting.net/)
+
 ## Cách Chạy Cục Bộ
 
 ### Yêu Cầu
