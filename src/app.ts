@@ -6,6 +6,8 @@ import { AppDataSource } from "./database/connect-database";
 import productRoutes from "./modules/products/product.route";
 import { handleError } from "./helper/error";
 
+
+
 (async () => {
   // express
   const app = express();
